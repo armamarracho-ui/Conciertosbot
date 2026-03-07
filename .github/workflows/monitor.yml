@@ -1,0 +1,32 @@
+name: Concierto Monitor Diario
+
+on:
+  schedule:
+    - cron: '0 15 * * *' # Se ejecuta diario a las 9 AM CDMX (15:00 UTC)
+  workflow_dispatch: # Permite ejecutarlo manualmente con un botón
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run script
+        env:
+          TM_API_KEY: ${{ secrets.TM_API_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'TicketBot'
+          git config --global user.email 'bot@github.com'
+          git add seen_events.json
+          git commit -m "Actualizar eventos vistos" || echo "Sin cambios"
+          git push
+          
