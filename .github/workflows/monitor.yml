@@ -2,8 +2,7 @@ name: Concierto Monitor Diario
 
 on:
   schedule:
-    - cron: '0 15 * * *' # Se ejecuta diario a las 9 AM CDMX (15:00 UTC)
-  workflow_dispatch: # Permite ejecutarlo manualmente con un botón
+    - cron: '0 * * * *'   # Esto significa: "en el minuto 0 de cada hora"
 
 jobs:
   run-monitor:
