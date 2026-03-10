@@ -9,7 +9,7 @@ TM_KEY = os.getenv('TM_API_KEY')
 TG_TOKEN = os.getenv('TELEGRAM_TOKEN')
 TG_CHAT = os.getenv('TELEGRAM_CHAT_ID')
 
-def fetch_all_events(pages=3):
+def fetch_all_events(pages=10):
     """
     Consulta la API de Ticketmaster manejando la paginación.
     Trae 100 eventos por página para no perderse nada.
